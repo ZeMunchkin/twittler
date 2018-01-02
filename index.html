@@ -3,66 +3,40 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel='stylesheet' href="stylesheet.css">
   </head>
   <body>
 
-    <h1>TWITTLER</h1>
+    <h1>t w i t t l e r</h1>
 
 
     <script>
 
       $(document).ready(function(){
 
-        $('h1').css({'display': 'block',
-          'font-size': '70px',
-          'margin-left': '125px'});
 
         var $body = $('body');
 
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $($tweet).css({'margin': '10px',
-            'margin-left': '40px',
-            'font-size': '20px',
-            'background-color': '#2DA2E8',
-            'height': '75px',
-            'width': '525px',
-            'color': 'white',
-            'padding': '15px'});
+          var $tweet = $('<div class="message"></div>');
+
+          var user = tweet.user;
+          var $user = $('<button></button>');
+          $user.text(user);
+
+          $tweet.text('@' + user + ': ' + tweet.message);
           $tweet.appendTo($body);
 
           var currentTime = Date.now();
           var currentDate = Date(currentTime);
-          var $currentDate = $('<div></div>');
+          var $currentDate = $('<div class="time"></div>');
           $currentDate.text(currentDate);
-          $currentDate.css({'font-size': '12px',
-            'margin-bottom': '30px',
-            'margin-left': '60px',
-            'margin-top': '-35px',
-            'color': 'white'});
           $currentDate.appendTo($body);
-
-
 
           index -= 1;
         }
-
-      /*  $('div').on('mouseenter', function () {
-          $(this).css({
-            'background-color': '#3F55FF';
-          });
-        });
-
-        $('div').on('mouseleave', function () {
-          $(this).css({
-            'background-color' : '#2DA2E8'
-          });
-        });
-
-*/
 
         $body.css({'padding': '25px'});
 
