@@ -1,24 +1,37 @@
 
-h1 {
-  font-size: 70px;
-  margin-left: 150px;
+body {
+  padding: 25px;
 }
 
+h1 {
+  display: block;
+  font-size: 70px;
+  margin: auto;
+  text-align: center;
+
+}
+
+
 .message {
-  margin: 10px;
-  margin-left: 40px;
   font-size: 20px;
-  background-color: #2DA2E8;
+  background-color: #0AA3E8;
   height: 75px;
   width: 525px;
   color: white;
   padding: 15px;
+  margin: auto;
+  margin-bottom: 10px;
 }
 
 .time {
+  margin: auto;
+  width: 490px;
   font-size: 12px;
   margin-bottom: 30px;
-  margin-left: 60px;
   margin-top: -35px;
   color: white;
+}
+
+.new {
+  background-color: #066691;
 }

@@ -8,39 +8,69 @@
   <body>
 
     <h1>t w i t t l e r</h1>
-
+    <br>
+    <br>
+    <br>
+    <ul id='tweetList'></ul>
 
     <script>
 
       $(document).ready(function(){
 
 
-        var $body = $('body');
+        var displayTweet = function (tweetObj) {
+          var tweetTime = tweetObj.created_at;
+          var user = tweetObj.user;
+          var $tweet = $('<li class="message" data-time="' + tweetTime + '" data-user="' + user + '"></li>');
+          $tweet.html('@<span class="user">' + user + '</span>: ' + tweetObj.message);
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div class="message"></div>');
+          $tweet.prependTo('#tweetList');
 
-          var user = tweet.user;
-          var $user = $('<button></button>');
-          $user.text(user);
 
-          $tweet.text('@' + user + ': ' + tweet.message);
-          $tweet.appendTo($body);
 
-          var currentTime = Date.now();
-          var currentDate = Date(currentTime);
-          var $currentDate = $('<div class="time"></div>');
-          $currentDate.text(currentDate);
-          $currentDate.appendTo($body);
 
-          index -= 1;
+        //  if ($tweet.hasClass('new')) {
+        //    $tweet.animate({'background-color': '#0AA3E8'}, 500);
+            //$tweet.removeClass('new');
+      //    }
+
         }
 
-        $body.css({'padding': '25px'});
+        var tweetNumbers = 1;
+        for (var i = 0; i < streams.home.length; i++){
+          var currentTweet = streams.home[i];
+          displayTweet(currentTweet);
+          tweetNumbers += 1;
+
+        //  var $currentDate = $('<div class="time"></div>');
+        //  $currentDate.text(currentDate);
+        //  $currentDate.prependTo('#tweetList');
+
+        }
 
 
+        setInterval(function () {
+          var currentNumTweets = streams.home.length;
+          var currentTweets = streams.home;
+
+          if (currentNumTweets > tweetNumbers) {
+            var newTweets = currentTweets.slice((tweetNumbers + 1));
+
+            for (var index = 0; index < newTweets.length; index++) {
+            //  console.log( 'message', newTweets[index].message);
+              displayTweet(newTweets[index]);
+            }
+            tweetNumbers = currentTweets.length;
+          }
+        }, 1500);
+
+
+
+        $('.user').on('click', 'span', function () {
+          var currentUser = $(this).closest('.user').data('user');
+          //access streams.home and find all tweets with same user
+          //
+        });
 
       });
 
