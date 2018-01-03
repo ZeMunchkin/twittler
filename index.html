@@ -3,6 +3,7 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <link rel='stylesheet' href="stylesheet.css">
   </head>
   <body>
@@ -18,21 +19,20 @@
       $(document).ready(function(){
 
 
+
+
         var displayTweet = function (tweetObj) {
           var tweetTime = tweetObj.created_at;
           var user = tweetObj.user;
-          var $tweet = $('<li class="message" data-time="' + tweetTime + '" data-user="' + user + '"></li>');
+          var $tweet = $('<li class="message" data-user="' + user + '"></li>');
           $tweet.html('@<span class="user">' + user + '</span>: ' + tweetObj.message);
 
+          var $tweetTime = $('<li class="time"></li>');
+          $tweetTime.text(moment(tweetTime).format('LLLL'));
+
+          $tweetTime.prependTo('#tweetList');
           $tweet.prependTo('#tweetList');
 
-
-
-
-        //  if ($tweet.hasClass('new')) {
-        //    $tweet.animate({'background-color': '#0AA3E8'}, 500);
-            //$tweet.removeClass('new');
-      //    }
 
         }
 
@@ -42,9 +42,6 @@
           displayTweet(currentTweet);
           tweetNumbers += 1;
 
-        //  var $currentDate = $('<div class="time"></div>');
-        //  $currentDate.text(currentDate);
-        //  $currentDate.prependTo('#tweetList');
 
         }
 
@@ -57,7 +54,6 @@
             var newTweets = currentTweets.slice((tweetNumbers + 1));
 
             for (var index = 0; index < newTweets.length; index++) {
-            //  console.log( 'message', newTweets[index].message);
               displayTweet(newTweets[index]);
             }
             tweetNumbers = currentTweets.length;
@@ -66,8 +62,18 @@
 
 
 
-        $('.user').on('click', 'span', function () {
-          var currentUser = $(this).closest('.user').data('user');
+
+  /*      var displayUserTweets = (user) {
+          $('.message').css({'display': 'none'});
+          var userTweets = streams.users['user'];
+
+        };
+
+*/
+
+        $('.user').on('click', function () {
+          var currentUser = $(this).closest('.user').val();
+          console.log(currentUser);
           //access streams.home and find all tweets with same user
           //
         });
