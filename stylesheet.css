@@ -6,7 +6,7 @@ body {
 
 #header {
   display: block;
-  font-size: 70px;
+  font-size: 85px;
   margin: auto;
   text-align: center;
   position: fixed;
@@ -54,6 +54,11 @@ body {
   font-size: 15px;
   margin-top: 110px;
   font-weight: 550;
+  cursor: pointer;
+}
+
+#newTweets:hover {
+  color: white;
 }
 
 .user {

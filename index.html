@@ -10,7 +10,7 @@
 
     <h1 id="header">t w i t t l e r</h1>
 
-    <button id='newTweets'>Show New Tweets</button>
+    <button id='newTweets'>you have new tweets!</button>
     <br id='newTweets'>
     <br id='newTweets'>
     <ul id='tweetList'></ul>
@@ -52,7 +52,7 @@
         $( 'button' ).on( 'click', function() {
 
           $( this ).css( {'display': 'none'} );
-          $( '#tweetList' ).css( {'margin-top': '110px'} );
+          $( '#tweetList' ).css( {'margin-top': '130px'} );
 
           newTweets.forEach( function( newTweet ) {
             displayTweet( newTweet );
@@ -95,21 +95,10 @@
           }
         }, 1500);
 
-
-/*
-        $(document).on('mouseenter', '.user', function () {
-          $('.user').css({'color': '#C1DAF7'})
-        });
-
-        $(document).on('mouseleave', '.user', function () {
-          $('.user').css({'color': 'white'})
-        });
-
-
-*/
         $(document).on('click', '.user', function () {
 
           $('#newTweets').css({'display': 'none'});
+          $( '#tweetList' ).css( {'margin-top': '130px'} );
 
           if (filter.on === true) {
             filter.on = false;
@@ -137,6 +126,7 @@
         });
 
       });
+
 
     </script>
   </body>
