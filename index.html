@@ -8,74 +8,130 @@
   </head>
   <body>
 
-    <h1>t w i t t l e r</h1>
-    <br>
-    <br>
-    <br>
+    <h1 id="header">t w i t t l e r</h1>
+
+    <button id='newTweets'>Show New Tweets</button>
+    <br id='newTweets'>
+    <br id='newTweets'>
     <ul id='tweetList'></ul>
+
 
     <script>
 
-      $(document).ready(function(){
+      $( document ).ready( function() {
 
-
-
-
-        var displayTweet = function (tweetObj) {
+        var displayTweet = function( tweetObj ) {
           var tweetTime = tweetObj.created_at;
           var user = tweetObj.user;
-          var $tweet = $('<li class="message" data-user="' + user + '"></li>');
-          $tweet.html('@<span class="user">' + user + '</span>: ' + tweetObj.message);
+          var $tweet = $( '<li class="message" data-user="' + user + '"></li>' );
+          $tweet.html( '@<span class="user">' + user + '</span>: ' + tweetObj.message );
 
-          var $tweetTime = $('<li class="time"></li>');
-          $tweetTime.text(moment(tweetTime).format('LLLL'));
+          var $tweetTime = $( '<li class="time" data-user="' + user + '"></li>' );
+          $tweetTime.text( moment( tweetTime ).format( 'LLLL' ));
 
-          $tweetTime.prependTo('#tweetList');
-          $tweet.prependTo('#tweetList');
-
-
+          $tweetTime.prependTo( '#tweetList' );
+          $tweet.prependTo( '#tweetList' );
         }
 
-        var tweetNumbers = 1;
-        for (var i = 0; i < streams.home.length; i++){
-          var currentTweet = streams.home[i];
-          displayTweet(currentTweet);
+
+        var tweetNumbers = 0;
+
+        streams.home.forEach( function ( currentTweet ) {
+          displayTweet( currentTweet );
           tweetNumbers += 1;
+        });
 
 
+        var filter = {
+          on: false,
+          user: '',
         }
 
+        $( 'button' ).on( 'click', function() {
+          $( this ).css( {'display': 'none'} );
+          $( '#tweetList' ).css( {'margin-top': '110px'} );
+        });
 
-        setInterval(function () {
+
+        setInterval( function () {
+
           var currentNumTweets = streams.home.length;
           var currentTweets = streams.home;
 
-          if (currentNumTweets > tweetNumbers) {
-            var newTweets = currentTweets.slice((tweetNumbers + 1));
+          if( filter.on === false ) {
+            if( currentNumTweets > tweetNumbers ) {
+              $( 'button' ).css( {'display': 'block'} );
+              $( '#tweetList' ).css( {'margin-top': '30px'} );
 
-            for (var index = 0; index < newTweets.length; index++) {
-              displayTweet(newTweets[index]);
+              var newTweets = currentTweets.slice( tweetNumbers );
+
+              newTweets.forEach( function( newTweet ) {
+                displayTweet( newTweet );
+              });
+
+              tweetNumbers = currentTweets.length;
             }
-            tweetNumbers = currentTweets.length;
           }
+
+
+          if( filter.on === true ) {
+            if( currentNumTweets > tweetNumbers ) {
+              $( 'button' ).css( {'display': 'block'} );
+              $( '#tweetList' ).css( {'margin-top': '30px'} );
+              var newTweets = currentTweets.slice( tweetNumbers );
+
+              for( var index = 0; index < newTweets.length; index++) {
+                if (newTweets[index].user === filter.user) {
+                  displayTweet(newTweets[index]);
+                }
+              }
+              tweetNumbers = currentTweets.length;
+            }
+          }
+
+
         }, 1500);
 
 
-
-
-  /*      var displayUserTweets = (user) {
-          $('.message').css({'display': 'none'});
-          var userTweets = streams.users['user'];
-
+/*
+        var displayUserTweets = function (user) {
+          $('li').css({'display': 'none'});
+          if ($('li').data('user') === user) {
+            $(this).find('li').css({'display': 'block'});
+          }
         };
 
 */
 
-        $('.user').on('click', function () {
-          var currentUser = $(this).closest('.user').val();
-          console.log(currentUser);
-          //access streams.home and find all tweets with same user
-          //
+
+        $(document).on('click', '.user', function () {
+          console.log(filter);
+          if (filter.on === true) {
+            filter.on = false;
+            filter.user = '';
+
+            console.log(filter);
+
+            $('li').remove();
+
+            streams.home.forEach( function (tweetObj) {
+              displayTweet(tweetObj);
+            });
+          }
+
+          else if (filter.on === false) {
+            filter.on = true;
+            currentUser = $(this).closest('.user').parent().data('user');
+            filter.user = currentUser;
+            filter.numTweets = streams.users[currentUser].length;
+
+            $('li').remove();
+
+            streams.users[currentUser].forEach( function( tweetObj ) {
+              displayTweet(tweetObj);
+            });
+          }
+
         });
 
       });
