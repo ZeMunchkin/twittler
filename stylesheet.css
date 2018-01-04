@@ -24,7 +24,7 @@ body {
 
 .message {
   font-size: 20px;
-  background-color: #0AA3E8;
+  background-color: #61ADFF;
   height: 75px;
   width: 525px;
   color: white;
@@ -47,14 +47,19 @@ body {
 #newTweets {
   display: none;
   margin: auto;
-  height: 30px;
+  height: 40px;
   position: fixed center;
-  background-color: #52FFBD;
+  background-color: #61B8FF;
   color: #364391;
-  font-size: 13px;
+  font-size: 15px;
   margin-top: 110px;
+  font-weight: 550;
 }
 
 .user {
   cursor: pointer;
+}
+
+.user:hover {
+  color: #C1DAF7;
 }

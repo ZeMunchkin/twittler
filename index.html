@@ -47,9 +47,23 @@
           user: '',
         }
 
+        var newTweets = [];
+
         $( 'button' ).on( 'click', function() {
+
           $( this ).css( {'display': 'none'} );
           $( '#tweetList' ).css( {'margin-top': '110px'} );
+
+          newTweets.forEach( function( newTweet ) {
+            displayTweet( newTweet );
+          });
+
+          if( filter.on === false ) {
+            tweetNumbers = streams.home.length;
+
+          } else if( filter.on === true ) {
+            filter.numTweets = streams.users[currentUser].length;
+          }
         });
 
 
@@ -63,54 +77,42 @@
               $( 'button' ).css( {'display': 'block'} );
               $( '#tweetList' ).css( {'margin-top': '30px'} );
 
-              var newTweets = currentTweets.slice( tweetNumbers );
-
-              newTweets.forEach( function( newTweet ) {
-                displayTweet( newTweet );
-              });
-
-              tweetNumbers = currentTweets.length;
+              newTweets = currentTweets.slice( tweetNumbers );
             }
-          }
+          } else if( filter.on === true ) {
 
+            var currentUser = filter.user;
+            var currentUserTweets = streams.users[currentUser];
+            var currentUserNumTweets = currentUserTweets.length;
 
-          if( filter.on === true ) {
-            if( currentNumTweets > tweetNumbers ) {
+            if( currentUserNumTweets > filter.numTweets ) {
               $( 'button' ).css( {'display': 'block'} );
               $( '#tweetList' ).css( {'margin-top': '30px'} );
-              var newTweets = currentTweets.slice( tweetNumbers );
 
-              for( var index = 0; index < newTweets.length; index++) {
-                if (newTweets[index].user === filter.user) {
-                  displayTweet(newTweets[index]);
-                }
-              }
-              tweetNumbers = currentTweets.length;
+              newTweets = currentUserTweets.slice( filter.numTweets );
+
             }
           }
-
-
         }, 1500);
 
 
 /*
-        var displayUserTweets = function (user) {
-          $('li').css({'display': 'none'});
-          if ($('li').data('user') === user) {
-            $(this).find('li').css({'display': 'block'});
-          }
-        };
+        $(document).on('mouseenter', '.user', function () {
+          $('.user').css({'color': '#C1DAF7'})
+        });
+
+        $(document).on('mouseleave', '.user', function () {
+          $('.user').css({'color': 'white'})
+        });
+
 
 */
-
-
         $(document).on('click', '.user', function () {
-          console.log(filter);
+
+          $('#newTweets').css({'display': 'none'});
+
           if (filter.on === true) {
             filter.on = false;
-            filter.user = '';
-
-            console.log(filter);
 
             $('li').remove();
 
